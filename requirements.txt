@@ -28,6 +28,7 @@ decorator @ file:///home/conda/feedstock_root/build_artifacts/decorator_16415556
 defusedxml @ file:///home/conda/feedstock_root/build_artifacts/defusedxml_1615232257335/work
 dill==0.3.6
 distlib==0.3.6
+docopt==0.6.2
 entrypoints @ file:///home/conda/feedstock_root/build_artifacts/entrypoints_1643888246732/work
 etils==0.9.0
 executing @ file:///home/conda/feedstock_root/build_artifacts/executing_1667317341051/work
@@ -109,6 +110,7 @@ pexpect @ file:///home/conda/feedstock_root/build_artifacts/pexpect_166729751607
 pickleshare @ file:///home/conda/feedstock_root/build_artifacts/pickleshare_1602536217715/work
 Pillow @ file:///Users/runner/miniforge3/conda-bld/pillow_1666920704573/work
 pipenv==2022.11.30
+pipreqs==0.4.11
 pkgutil_resolve_name @ file:///home/conda/feedstock_root/build_artifacts/pkgutil-resolve-name_1633981968097/work
 platformdirs @ file:///home/conda/feedstock_root/build_artifacts/platformdirs_1657729053205/work
 plotnine @ file:///home/conda/feedstock_root/build_artifacts/plotnine_1665398702244/work
@@ -171,4 +173,5 @@ websocket-client @ file:///home/conda/feedstock_root/build_artifacts/websocket-c
 Werkzeug==2.2.2
 widgetsnbextension @ file:///home/conda/feedstock_root/build_artifacts/widgetsnbextension_1662157836868/work
 wrapt==1.14.1
+yarg==0.1.9
 zipp @ file:///home/conda/feedstock_root/build_artifacts/zipp_1669453021653/work
