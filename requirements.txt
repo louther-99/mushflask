@@ -3,6 +3,5 @@ Flask==2.2.2
 numpy==1.23.5
 pandas
 scikit-learn
-tensorflow==2.10.1
 gunicorn
 pickle4
