@@ -1,19 +1,8 @@
 
-
 Flask==2.2.2
-google-auth==2.15.0
-google-pasta==0.2.0
-keras==2.10.0
-Keras-Preprocessing==1.1.2
-matplotlib==3.6.2
 numpy==1.23.5
-panda==0.3.1
-Pillow==9.3.0
-plotnine==0.10.1
-scipy==1.9.3
-statsmodels==0.13.5
-tensorboard==2.10.1
+pandas
+scikit-learn
 tensorflow==2.10.1
-tensorflow-estimator==2.10.0
-tensorflow-io-gcs-filesystem==0.28.0
 gunicorn
+pickle4
