@@ -8,7 +8,10 @@ import time
 
 
 
+#Create an app usng the Flask class
 app = Flask(__name__)
+
+#Load the trained model (Pickle file)
 model = pickle.load(open("GaussianNbPickle.pkl", "rb"))
 
 @app.route('/api', methods = ['GET'])
@@ -24,8 +27,10 @@ def response():
     result = query + " " + time.ctime()
     return jsonify({"response" : result})
 
-@app.route('/predict', methods = ['POST'])
+#route() decorator to tell Flask what URL should trigger our function
+@app.route('/predict', methods = ['POST']) #POST To send data
 def predict():
+
     json_ = request.json
     query_df = pd.DataFrame(json_)
     prediction = model.predict(query_df)
@@ -34,6 +39,7 @@ def predict():
     # features = [np.array(float_features)]
     # prediction = model.predict(features)
     #return render template ("in")
+
 
 if __name__ == "__main__":
     #app.run(host="0.0.0.0",)
