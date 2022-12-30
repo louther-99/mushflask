@@ -21,8 +21,6 @@ from tensorflow.python import keras
 import tensorflow
 
 
-
-
 df = pd.read_csv(r"/Users/loutherolayres/PycharmProjects/mush/MyDataSetCSV2.csv")
 print(f" Dataframe Head: \n {df.head()}\n")
 print(f" Dataframe Described: \n {df.describe()}\n")
@@ -35,7 +33,7 @@ df['outcome'].hist()
 
 kf = KFold(n_splits=5)
 print(f"\nkf is: \n{kf}\n")
-acc = []
+# acc = []
 
 
 
@@ -71,8 +69,16 @@ clf.fit(X_train, y_train)
 
 #Evaluating the model
 y_pred = clf.predict(X_test)
+ac = accuracy_score(y_test, y_pred);
 print(f"Accuracy Score: \n {accuracy_score(y_test, y_pred)}\n")
 print(f"Classification Report: \n {classification_report(y_test, y_pred)}\n")
+
+print('Printing shits')
+print(y_pred)
+print("\n")
+print(y_test)
+print("\n")
+print(ac)
 
 
 #saving model
@@ -114,25 +120,23 @@ print(metrics.classification_report(y_test, yPred))
 # pickle.dump(clf, open('GaussianNbPickle.pkl', "wb"))
 #
 # loaded_pickle_model = pickle.load(open("GaussianNbPickle.pkl"),"rb")
-#
+
 # pickle_y_preds = loaded_pickle_model.predict(X_train)
 # evaluate_preds(y_test, pickle_y_preds)
-
-#keras
-kerasFile = 'naive.h5';
-keras.models.save_model(clf, kerasFile)
-
-#keras to tflite
-conv = l
+#
+# #keras
+# kerasFile = 'naive.h5';
+# keras.models.save_model(clf, kerasFile)
+#
 
 
-#Converting the model to Tf model
-new_model = keras.models.load_model('GaussianNbPickle')
-converter = tensorflow.lite.TFLiteConverter.from_keras_model(new_model)
-tflite_model = converter.convert()
-open("converted_tf_lite.tflite", "wb").write(tflite_model)
-
-
+# #Converting the model to Tf model
+# new_model = keras.models.load_model('GaussianNbPickle')
+# converter = tensorflow.lite.TFLiteConverter.from_keras_model(new_model)
+# tflite_model = converter.convert()
+# open("converted_tf_lite.tflite", "wb").write(tflite_model)
+#
+#
 
 
 
