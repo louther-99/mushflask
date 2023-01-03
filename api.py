@@ -88,7 +88,17 @@ def getJsontoCsv():
     # print(f"rf.predict(X_test) is: \n{rf.predict(X_test)}\n")
 
     dfItem = pd.DataFrame.from_records(jsn)
-    dfItem.to_csv('my7.csv')
+    dfItem.to_csv('my7.csv', index = False)
+
+    # l = dfItem['lightLevel'];
+    # r = dfItem['roomTemp'];
+    # h = dfItem['humidity'];
+    #
+    # print(l);
+    # print(h);
+    # print(r);
+
+
     # df = pd.read_json(jsons)
     # df.to_csv('my3.csv')
     print(dfItem);
@@ -99,6 +109,10 @@ def getJsontoCsv():
     dfwut = pd.read_csv(r"my7.csv")
     print(f" Dataframe Head: \n {dfwut.head()}\n")
     print(f" Dataframe Described: \n {dfwut.describe()}\n")
+
+    # for row in dfItem.loc[row, 'lightLevel']
+
+
     mushroom_features = ['lightLevel', 'roomTemp', 'humidity']
     mushroom_class = ['outcome']
     XX = dfwut[mushroom_features]
@@ -124,6 +138,54 @@ def getJsontoCsv():
     print("Trying to save a new model")
     joblib.dump(clfs, "GaussianNbV2shits")
     print("Done creating a model");
+
+
+
+    lightLevel = float(jsn[0]['lightLevel'])
+    roomTemp = float(jsn[0]['roomTemp'])
+    humidity = float(jsn[0]['humidity'])
+
+    print("Printing length of json")
+    # json_string = json.dumps(jsn)
+    # byte_ = json_string.encode("utf-8")
+    size_in_bytes = len(jsn)
+    print(size_in_bytes)
+    list = []
+    listpred = []
+
+    for x in range(size_in_bytes):
+        lightLevel = float(jsn[x]['lightLevel'])
+        roomTemp = float(jsn[x]['roomTemp'])
+        humidity = float(jsn[x]['humidity'])
+        print (lightLevel, roomTemp, humidity)
+        featuress = [lightLevel, roomTemp, humidity]
+        list.append(featuress)
+
+        featuresss = [np.array(list[x])]
+        print("\nprinting featuresss")
+        print(featuresss)
+        prediction = model.predict(featuresss)
+        print("Prediction iss")
+        print(prediction)
+        print(str(prediction))
+        listpred.append(str(prediction))
+
+
+
+
+    print("listpred")
+    print(listpred)
+    print("list")
+    print(list)
+    print("list[1]")
+    print(list[1])
+    print("Printing another shits")
+    print(lightLevel);
+    print(roomTemp);
+    print(humidity);
+    print("Done printing another shits")
+
+
 
     # print("Done printing df pd.read_json")
     # df = pd.DataFrame(jsn)

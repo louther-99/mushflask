@@ -1,6 +1,7 @@
 # from pydataset import data
 import pandas as pd
 from sklearn.naive_bayes import GaussianNB
+# from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
 from sklearn.model_selection import LeaveOneOut
@@ -22,6 +23,41 @@ import tensorflow
 
 
 df = pd.read_csv(r"/Users/loutherolayres/PycharmProjects/mush/MyDataSetCSV2.csv")
+
+rec = list()
+
+print("Printing some shits")
+l = df['lightLevel'];
+r = df['roomTemp'];
+h = df['humidity'];
+print(l);
+print(h);
+print(r);
+print("Done shitty")
+
+print("Printing some shits")
+ll = df['lightLevel'].tolist();
+rr = df['roomTemp'].tolist();
+hh = df['humidity'].tolist();
+print(ll);
+print(rr);
+print(hh);
+print("Done shitty")
+
+
+
+for i in range(len(ll)):
+    print(ll[i])
+    rec.append(ll[i])
+    rec.append(rr[i])
+    rec.append(hh[i])
+
+print(rec)
+
+# for x in ll.length:
+#     lll = ll[x] + hh[x] + rr[x]
+# print(lll);
+
 print(f" Dataframe Head: \n {df.head()}\n")
 print(f" Dataframe Described: \n {df.describe()}\n")
 mushroom_features = ['lightLevel', 'roomTemp', 'humidity']
@@ -62,6 +98,9 @@ print(f"\ny_test is: \n{y_test}\n")
 #Training the model/Instantiating the model
 clf = GaussianNB()
 clf.fit(X_train, y_train)
+#
+# clf = LogisticRegression()
+# clf.fit(X_train, y_train)
 
 
 # #Model Summary
