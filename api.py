@@ -153,6 +153,10 @@ def getJsontoCsv():
     list = []
     listpred = []
 
+    df = pd.read_csv("my7.csv")
+
+
+
     for x in range(size_in_bytes):
         lightLevel = float(jsn[x]['lightLevel'])
         roomTemp = float(jsn[x]['roomTemp'])
@@ -168,13 +172,35 @@ def getJsontoCsv():
         print("Prediction iss")
         print(prediction)
         print(str(prediction))
-        listpred.append(str(prediction))
+        listpred.append(prediction)
+
+        # updating the column value/data
+        if(listpred[x] == ['Yes']):
+            y = 'Yes'
+            df.loc[x, 'outcome'] = y
+
+        if (listpred[x] == ['No']):
+            n = 'No'
+            df.loc[x, 'outcome'] = n
 
 
 
 
+
+    df['outcome'] = df['outcome'].replace("['Yes']", 'Yes')
+    df['outcome'] = df['outcome'].replace("['No']", 'No')
+
+    # writing into the file
+    df.to_csv("AllD.csv", index=False)
+    # sh = str(listpred)
+    # ch =
+    # list_of_str = [elem.replace(ch, 'Yes') for elem in sh]
+    # # new = listpred.replace(['Yes'], 'Yes')
+    # print(list_of_str)
     print("listpred")
     print(listpred)
+    print("listpred[0]")
+    print(listpred[0])
     print("list")
     print(list)
     print("list[1]")
