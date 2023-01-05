@@ -22,7 +22,8 @@ from tensorflow.python import keras
 import tensorflow
 
 
-df = pd.read_csv(r"/Users/loutherolayres/PycharmProjects/mush/MyDataSetCSV2.csv")
+# df = pd.read_csv(r"/Users/loutherolayres/PycharmProjects/mush/MyDataSetCSV2.csv")
+df = pd.read_csv(r"MyDataSetCSV2.csv")
 
 rec = list()
 
@@ -69,7 +70,7 @@ df['outcome'].hist()
 
 kf = KFold(n_splits=5)
 print(f"\nkf is: \n{kf}\n")
-# acc = []
+# acc = []f
 
 
 

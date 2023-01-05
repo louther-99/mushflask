@@ -1,10 +1,9 @@
 import json
 import time
-
+from main import y_test, y_pred, ac
 import joblib
 from sklearn.model_selection import KFold
 from sklearn.naive_bayes import GaussianNB
-
 import numpy as np
 import pandas as pd
 from flask import Flask, request, jsonify
@@ -13,7 +12,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 import time
 
-from main import y_pred
+print("Ho")
 
 responsed = "";
 acc = ['lightLevel', 'roomTemp', 'humidity'];
@@ -50,6 +49,7 @@ def getJsontoCsv():
     print("Printing jsn")
     print(jsn)
     print("Done printing jsn")
+    print(jsn[0]['outcome']); #no
     # title = ('title' + {jsn['title']});
     # data = ('data' + {jsn['data']});
     #
@@ -89,6 +89,9 @@ def getJsontoCsv():
 
     dfItem = pd.DataFrame.from_records(jsn)
     dfItem.to_csv('my7.csv', index = False)
+    print(dfItem);
+    print(dfItem.head())
+    print(dfItem.describe());
 
     # l = dfItem['lightLevel'];
     # r = dfItem['roomTemp'];
@@ -101,43 +104,6 @@ def getJsontoCsv():
 
     # df = pd.read_json(jsons)
     # df.to_csv('my3.csv')
-    print(dfItem);
-    print(dfItem.head())
-    print(dfItem.describe());
-
-    print("Starting to create a new model");
-    dfwut = pd.read_csv(r"my7.csv")
-    print(f" Dataframe Head: \n {dfwut.head()}\n")
-    print(f" Dataframe Described: \n {dfwut.describe()}\n")
-
-    # for row in dfItem.loc[row, 'lightLevel']
-
-
-    mushroom_features = ['lightLevel', 'roomTemp', 'humidity']
-    mushroom_class = ['outcome']
-    XX = dfwut[mushroom_features]
-    yy = dfwut[mushroom_class]
-    kf = KFold(n_splits=5)
-    print(f"\nkf is: \n{kf}\n")
-    print(f"\ndfwut is: \n{dfwut}\n")
-    print(f"\nX is: \n{XX}\n")
-    print(f"\ny is: \n{yy}\n")
-
-    # Split data
-    X_train, X_test, y_train, y_test = train_test_split(XX, yy, test_size=.20, random_state=0)
-
-    clfs = GaussianNB()
-    clfs.fit(X_train, y_train)
-
-    y_preds = clfs.predict(X_test)
-    acs = accuracy_score(y_test, y_preds);
-
-    print(f"Accuracy Score: \n {accuracy_score(y_test, y_preds)}\n")
-    print(f"Classification Report: \n {classification_report(y_test, y_preds)}\n")
-
-    print("Trying to save a new model")
-    joblib.dump(clfs, "GaussianNbV2shits")
-    print("Done creating a model");
 
 
 
@@ -152,10 +118,13 @@ def getJsontoCsv():
     print(size_in_bytes)
     list = []
     listpred = []
+    newJsn = [];
+    newJsn = jsn;
+
+    print(f"New json is {newJsn}")
+    print(f"json is {jsn}\n")
 
     df = pd.read_csv("my7.csv")
-
-
 
     for x in range(size_in_bytes):
         lightLevel = float(jsn[x]['lightLevel'])
@@ -166,13 +135,30 @@ def getJsontoCsv():
         list.append(featuress)
 
         featuresss = [np.array(list[x])]
-        print("\nprinting featuresss")
+        print("printing featuresss")
         print(featuresss)
         prediction = model.predict(featuresss)
-        print("Prediction iss")
-        print(prediction)
-        print(str(prediction))
+        print(f"Prediction iss {prediction}")
+        print(f"jsn[{x}]['outcome'] is {jsn[x]['outcome']}")
+        # print(str(prediction))
         listpred.append(prediction)
+        if (prediction == 'Yes'):
+            print("Nasa yes")
+            # newJsn[x]['outcome'] = "Yes"
+            newJsn[x]['outcome'] = newJsn[x]['outcome'].replace('No', 'Yes')
+            print(f"newJsn[{x}]['outcome'] is now {newJsn[x]['outcome']}")
+        if (prediction == 'No'):
+            print("Nasa no")
+            # newJsn[x]['outcome'] = "No"
+            newJsn[x]['outcome'] = newJsn[x]['outcome'].replace("Yes", 'No')
+            print(f"newJsn[{x}]['outcome'] is now {newJsn[x]['outcome']}")
+
+        print(f"jsn[{x}]['outcome'] is {jsn[x]['outcome']}")
+        print(f"jsn[{x}]['outcome'] is {jsn[x]['outcome']}")
+        print(f"Then {jsn[x]['outcome']}")
+        print(f"Now {newJsn[x]['outcome']}")
+
+
 
         # updating the column value/data
         if(listpred[x] == ['Yes']):
@@ -184,11 +170,13 @@ def getJsontoCsv():
             df.loc[x, 'outcome'] = n
 
 
-
-
-
     df['outcome'] = df['outcome'].replace("['Yes']", 'Yes')
     df['outcome'] = df['outcome'].replace("['No']", 'No')
+
+
+    print(f"After the loop json: {jsn}")
+    print(f"After the loop newJsn: {newJsn}")
+
 
     # writing into the file
     df.to_csv("AllD.csv", index=False)
@@ -233,11 +221,58 @@ def getJsontoCsv():
     # print(f"Accuracy Score: \n {accuracy_score(y_test, y_pred)}\n")
     # print(f"Classification Report: \n {classification_report(y_test, y_pred)}\n")
     # return jsonify(jsn)
+
+
+    print("Starting to create a new model");
+    dfwutt = pd.read_csv(r"AllD.csv")
+    print(f" Dataframe Head: \n {dfwutt.head()}\n")
+    print(f" Dataframe Described: \n {dfwutt.describe()}\n")
+
+    # for row in dfItem.loc[row, 'lightLevel']
+
+    mu_features = ['lightLevel', 'roomTemp', 'humidity']
+    mu_class = ['outcome']
+    XXX = dfwutt[mu_features]
+    yyy = dfwutt[mu_class]
+    kff = KFold(n_splits=5)
+    print(f"\nkf is: \n{kff}\n")
+    print(f"\ndfwut is: \n{dfwutt}\n")
+    print(f"\nX is: \n{XXX}\n")
+    print(f"\ny is: \n{yyy}\n")
+
+    # Split data
+    XX_train, XX_test, yy_train, yy_test = train_test_split(XXX, yyy, test_size=.20, random_state=0)
+    print(f"\nXX_train is: \n{XX_train}\n")
+    print(f"\nXX_test is: \n{XX_test}\n")
+    print(f"\nyy_train is: \n{yy_train}\n")
+    print(f"\nyy_test is: \n{yy_test}\n")
+
+    clfss = GaussianNB()
+    print("Fitting")
+    clfss.fit(XX_train, np.ravel(yy_train))
+
+
+    yy_preds = clfss.predict(XX_test)
+    acs = accuracy_score(yy_test, yy_preds);
+
+    print(acs);
+
+    print(f"Accuracy Score: \n {accuracy_score(yy_test, yy_preds)}\n")
+    print(f"Classification Report: \n {classification_report(yy_test, yy_preds)}\n")
+
+    cmm = confusion_matrix(yy_test, yy_preds)
+    print(f"\nConfusion Matrix: \n{cmm}\n")
+
+    print("Trying to save a new model")
+    joblib.dump(clfss, "GaussianNbV2shitsss")
+    print("Done creating a model");
+
     print("Printing jsonify(jsn) before returning")
     wut = jsonify(jsn)
+    now = jsonify(newJsn)
     print(wut)
-    return wut
-
+    print(now)
+    return now
 
 @app.route('/predict', methods = ['POST']) #POST To send data
 def predict():
@@ -287,10 +322,11 @@ def predict():
     print(featuress)
     prediction = model.predict(featuress)
     print("\nPrinting y_test")
-    print(y_test)
+    # print(y_test)
 
-    ac = accuracy_score(y_test, y_pred);
-    print(f'\n{ac} is ac')
+    # ac = accuracy_score(y_test, y_pred);
+    # ac = accuracy_score(y_test, prediction);
+    # print(f'\n{ac} is ac')
     print(jsonify({"Prediction": list(prediction)}))
     return jsonify({"Prediction": list(prediction), "Accuracy" : ac});
     # return ({"Prediction": list(prediction)});
@@ -339,7 +375,10 @@ def trys():
 def hello_world():
     return 'Hello, World!'
 
+print("Before run")
+
 if __name__ == "__main__":
+    print("Run")
     #app.run(host="0.0.0.0",)
     app.run(debug=True);
 
