@@ -13,6 +13,8 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
 import time
 
 print("Ho")
+countShitYes = 0;
+countShitNo = 0;
 
 responsed = "";
 acc = ['lightLevel', 'roomTemp', 'humidity'];
@@ -41,7 +43,7 @@ def response():
 #route() decorator to tell Flask what URL should trigger our function
 
 @app.route('/convert', methods = ['POST'])
-def getJsontoCsv():
+def getJsontoCsv(countShitYes = 0, countShitNo = 0):
     jsn = request.json
     # df2 = pd.read_json(jsn, orient='index')
     # print("Printing df2")
@@ -147,11 +149,13 @@ def getJsontoCsv():
             # newJsn[x]['outcome'] = "Yes"
             newJsn[x]['outcome'] = newJsn[x]['outcome'].replace('No', 'Yes')
             print(f"newJsn[{x}]['outcome'] is now {newJsn[x]['outcome']}")
+            countShitYes += 1
         if (prediction == 'No'):
             print("Nasa no")
             # newJsn[x]['outcome'] = "No"
             newJsn[x]['outcome'] = newJsn[x]['outcome'].replace("Yes", 'No')
             print(f"newJsn[{x}]['outcome'] is now {newJsn[x]['outcome']}")
+            countShitNo += 1
 
         print(f"jsn[{x}]['outcome'] is {jsn[x]['outcome']}")
         print(f"jsn[{x}]['outcome'] is {jsn[x]['outcome']}")
@@ -177,6 +181,14 @@ def getJsontoCsv():
     print(f"After the loop json: {jsn}")
     print(f"After the loop newJsn: {newJsn}")
 
+
+
+    total = countShitYes + countShitNo
+    determiner = round((countShitYes / total) * 100)
+    print(f"countShitYes: {countShitYes}")
+    print(f"countShitNo: {countShitNo}")
+    print(f"total: {total}")
+    print(f"determiner: {determiner}")
 
     # writing into the file
     df.to_csv("AllD.csv", index=False)
@@ -270,9 +282,11 @@ def getJsontoCsv():
     print("Printing jsonify(jsn) before returning")
     wut = jsonify(jsn)
     now = jsonify(newJsn)
+    acsjson = jsonify(acs)
     print(wut)
     print(now)
-    return now
+    # return (now, acsjson)
+    return jsonify({"Prediction": newJsn, "Accuracy" : acs, "Outcome" : determiner });
 
 @app.route('/predict', methods = ['POST']) #POST To send data
 def predict():
