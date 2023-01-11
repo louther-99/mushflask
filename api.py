@@ -44,15 +44,21 @@ def response():
 
 @app.route('/description', methods = ['GET', 'POST'])
 def getDes():
+    des2jsns = request.json
     dfs = pd.read_csv(r"my7.csv")
     print(f" Dataframe Head: \n {dfs.head()}\n")
     print(f" Dataframe Described: \n {dfs.describe()}\n")
     dess = dfs.describe()
     desss = dess.to_json()
+    dess2Dicts = dess.to_dict()
+    print(f"dess: {dess}")
+    print(f"desss: {desss}")
+    print(f"des2jsns: {des2jsns}");
     print("Dess before return")
-    return desss
-
+    # return desss
     #dess.to_json() then simply return
+    # return jsonify({"Response" : des2jsns, "Responde" : dess2Dicts})
+    return jsonify({"Responde" : dess2Dicts, "Response" : des2jsns, })
 
 
 
@@ -327,15 +333,20 @@ def getJsontoCsv(countShitYes = 0, countShitNo = 0):
 
 @app.route('/description2', methods = ['GET', 'POST'])
 def getDes2():
-    # des2jsn = request.json
-    # print(f"des2jsn: {des2jsn}");
+    des2jsn = request.json
     dfs = pd.read_csv(r"MyDataSetCSV2.csv")
     print(f" Dataframe Head: \n {dfs.head()}\n")
     print(f" Dataframe Described: \n {dfs.describe()}\n")
     dess2 = dfs.describe()
-    desss2 = dess2.to_json()
-    print("Dess before return")
-    return desss2
+    dess2Dict = dess2.to_dict()
+    desss2Json = dess2.to_json()
+    print(f"dess2Dict: {dess2Dict}")
+    print(f"desss2Json: {desss2Json}")
+    print(f"des2jsn: {des2jsn}");
+    print("desss2 before return")
+    # return (des2jsn,desss2 )
+    # return jsonify({"Response" : des2jsn, "Responde" : desss2})
+    return jsonify({"Responde" : dess2Dict, "Response" : des2jsn, })
 
 
 @app.route('/predict', methods = ['POST']) #POST To send data
