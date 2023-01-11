@@ -42,6 +42,21 @@ def response():
 
 #route() decorator to tell Flask what URL should trigger our function
 
+@app.route('/description', methods = ['GET', 'POST'])
+def getDes():
+    dfs = pd.read_csv(r"my7.csv")
+    print(f" Dataframe Head: \n {dfs.head()}\n")
+    print(f" Dataframe Described: \n {dfs.describe()}\n")
+    dess = dfs.describe()
+    desss = dess.to_json()
+    print("Dess before return")
+    return desss
+
+    #dess.to_json() then simply return
+
+
+
+
 @app.route('/convert', methods = ['POST'])
 def getJsontoCsv(countShitYes = 0, countShitNo = 0):
     jsn = request.json
@@ -93,6 +108,12 @@ def getJsontoCsv(countShitYes = 0, countShitNo = 0):
     dfItem.to_csv('my7.csv', index = False)
     print(dfItem);
     print(dfItem.head())
+    des = dfItem.describe()
+    # sonify = jsonify(des)
+    # desDump = json.dumps(des)
+    print(f"Des: {des}")
+    jsonDes = des.to_json()
+    print(f"Des to json {jsonDes}")
     print(dfItem.describe());
 
     # l = dfItem['lightLevel'];
@@ -285,8 +306,37 @@ def getJsontoCsv(countShitYes = 0, countShitNo = 0):
     acsjson = jsonify(acs)
     print(wut)
     print(now)
+    # jsonify({"Description": jsonDes})
+
     # return (now, acsjson)
+    # return (jsonDes + jsonify({"Prediction": newJsn, "Accuracy" : acs, "Outcome" : determiner }))
+    # return  jsonify({"Description" : jsonDes})
     return jsonify({"Prediction": newJsn, "Accuracy" : acs, "Outcome" : determiner });
+    #
+    # value = {
+    #     "Prediction": newJsn,
+    #     "Accuracy": acs,
+    #     "Outcome" : determiner,
+    #     # "Description" : jsonify(jsonDes)
+    # }
+    # val = json.dumps(value)
+    # # return (val,jsonDes)
+    # # return jsonDes
+    # return val
+
+
+@app.route('/description2', methods = ['GET', 'POST'])
+def getDes2():
+    # des2jsn = request.json
+    # print(f"des2jsn: {des2jsn}");
+    dfs = pd.read_csv(r"MyDataSetCSV2.csv")
+    print(f" Dataframe Head: \n {dfs.head()}\n")
+    print(f" Dataframe Described: \n {dfs.describe()}\n")
+    dess2 = dfs.describe()
+    desss2 = dess2.to_json()
+    print("Dess before return")
+    return desss2
+
 
 @app.route('/predict', methods = ['POST']) #POST To send data
 def predict():
@@ -347,6 +397,9 @@ def predict():
     # return jsonify({"Prediction": list(prediction)});
     # return ("Response" + prediction)
     # return jsonify(features);
+
+
+
 
 
     # query_df = pd.DataFrame(json_)
