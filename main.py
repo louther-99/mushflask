@@ -23,7 +23,7 @@ import tensorflow
 
 
 # df = pd.read_csv(r"/Users/loutherolayres/PycharmProjects/mush/MyDataSetCSV2.csv")
-df = pd.read_csv(r"MyDataSetCSV2.csv")
+df = pd.read_csv(r"dataset.csv")
 
 rec = list()
 
@@ -127,10 +127,10 @@ print(ac)
 
 #Joblib to save the model
 import joblib
-joblib.dump(clf, "GaussianNb")
+joblib.dump(clf, "Naive")
 
 #load the  model
-rf = joblib.load("GaussianNb")
+rf = joblib.load("Naive")
 print(f"\n rf is: \n {rf}\n")
 
 #predicting using the model created
@@ -156,9 +156,9 @@ print(metrics.classification_report(y_test, yPred))
 
 # mean_absolute_error(y_test, yPred)
 
-# import pickle
-# pickle.dump(clf, open('GaussianNbPickle.pkl', "wb"))
-#
+import pickle
+pickle.dump(clf, open('Naive.pkl', "wb"))
+
 # loaded_pickle_model = pickle.load(open("GaussianNbPickle.pkl"),"rb")
 
 # pickle_y_preds = loaded_pickle_model.predict(X_train)

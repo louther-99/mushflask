@@ -24,7 +24,7 @@ title = []
 app = Flask(__name__)
 
 #Load the trained model (Pickle file)
-model = pickle.load(open("GaussianNbPickle.pkl", "rb"))
+model = pickle.load(open("Naive.pkl", "rb"))
 
 @app.route('/api', methods = ['GET'])
 def returnascii():
@@ -42,10 +42,10 @@ def response():
 
 #route() decorator to tell Flask what URL should trigger our function
 
-@app.route('/description', methods = ['GET', 'POST'])
+@app.route('/descriptionByBatch', methods = ['GET', 'POST'])
 def getDes():
     des2jsns = request.json
-    dfs = pd.read_csv(r"my7.csv")
+    dfs = pd.read_csv(r"my8.csv")
     print(f" Dataframe Head: \n {dfs.head()}\n")
     print(f" Dataframe Described: \n {dfs.describe()}\n")
     dess = dfs.describe()
@@ -63,7 +63,7 @@ def getDes():
 
 
 
-@app.route('/convert', methods = ['POST'])
+@app.route('/convertByBatch', methods = ['POST'])
 def getJsontoCsv(countShitYes = 0, countShitNo = 0):
     jsn = request.json
     # df2 = pd.read_json(jsn, orient='index')
@@ -111,7 +111,7 @@ def getJsontoCsv(countShitYes = 0, countShitNo = 0):
     # print(f"rf.predict(X_test) is: \n{rf.predict(X_test)}\n")
 
     dfItem = pd.DataFrame.from_records(jsn)
-    dfItem.to_csv('my7.csv', index = False)
+    dfItem.to_csv('my8.csv', index = False)
     print(dfItem);
     print(dfItem.head())
     des = dfItem.describe()
@@ -153,7 +153,7 @@ def getJsontoCsv(countShitYes = 0, countShitNo = 0):
     print(f"New json is {newJsn}")
     print(f"json is {jsn}\n")
 
-    df = pd.read_csv("my7.csv")
+    df = pd.read_csv("my8.csv")
 
     for x in range(size_in_bytes):
         lightLevel = float(jsn[x]['lightLevel'])
@@ -331,35 +331,43 @@ def getJsontoCsv(countShitYes = 0, countShitNo = 0):
     # return val
 
 
-@app.route('/description2', methods = ['GET', 'POST'])
+@app.route('/description2ByIndiv', methods = ['GET', 'POST'])
 def getDes2():
-    des2jsn = request.json
-    dfs = pd.read_csv(r"MyDataSetCSV2.csv")
+
+    desss2Json = request.json
+    dfs = pd.read_csv(r"dataset.csv")
     print(f" Dataframe Head: \n {dfs.head()}\n")
     print(f" Dataframe Described: \n {dfs.describe()}\n")
     dess2 = dfs.describe()
+    desss = dess2.to_json()
     dess2Dict = dess2.to_dict()
-    desss2Json = dess2.to_json()
+    print(f"dess: {desss}")
     print(f"dess2Dict: {dess2Dict}")
-    print(f"desss2Json: {desss2Json}")
-    print(f"des2jsn: {des2jsn}");
-    print("desss2 before return")
-    # return (des2jsn,desss2 )
-    # return jsonify({"Response" : des2jsn, "Responde" : desss2})
-    return jsonify({"Responde" : dess2Dict, "Response" : des2jsn, })
+    print(f"des2jsns: {desss2Json}");
+    print("Dess before return")
+    # return desss
+    #dess.to_json() then simply return
+    # return jsonify({"Response" : des2jsns, "Responde" : dess2Dicts})
+    return jsonify({"Responde" : dess2Dict, "Response" : desss2Json, })
 
 
-@app.route('/predict', methods = ['POST']) #POST To send data
+
+@app.route('/predictByIndiv', methods = ['POST', 'GET']) #POST To send data
 def predict():
+    print("Start of predictByIndiv")
     # main.read()
     di = []
     # Receive parameter from json
     # j = request.get_json()
     # print(j);
-
-    df = pd.read_csv(r"/Users/loutherolayres/PycharmProjects/mush/MyDataSetCSV2.csv")
-    described = df.describe();
-    print(f" Dataframe Described: \n {df.describe()}\n")
+    des2jsn = request.json
+    df = pd.read_csv(r"dataset.csv")
+    dess2 = df.describe()
+    dess2Dict = dess2.to_dict()
+    desss2Json = dess2.to_json()
+    print(f"dess2Dict: {dess2Dict}")
+    print(f"desss2Json: {desss2Json}")
+    print(f"des2jsn: {des2jsn}");
     mushroom_features = ['lightLevel', 'roomTemp', 'humidity']
     mushroom_class = ['outcome']
     X = df[mushroom_features]
@@ -373,13 +381,6 @@ def predict():
     json_ = request.json
     print(json_);
     print("Done printing json\n")
-    # python_data = json.loads(json_)
-    # print(python_data)
-    # print("Done printing python_data")
-
-    # lightLevel = int(python_data['lightLevel'])
-    # roomTemp = int(python_data['roomTemp'])
-    # humidity = int(python_data['humidity'])
 
     lightLevel = float(json_['lightLevel'])
     roomTemp = float(json_['roomTemp'])
@@ -388,7 +389,7 @@ def predict():
     features = [lightLevel, roomTemp, humidity]
     print("\nPrinting lightlevel, roomtemp, humidity");
     print(lightLevel, roomTemp, humidity)
-    # return (humidity)
+
     print("\nPrinting features below")
     print(features)
 
@@ -403,13 +404,12 @@ def predict():
     # ac = accuracy_score(y_test, prediction);
     # print(f'\n{ac} is ac')
     print(jsonify({"Prediction": list(prediction)}))
-    return jsonify({"Prediction": list(prediction), "Accuracy" : ac});
+    # return jsonify({"Prediction": list(prediction), "Accuracy" : ac, "Responde" : dess2Dict, "Response" : des2jsn});
+    return jsonify({"Prediction": list(prediction), "Accuracy" : ac, "Responde" : dess2Dict});
     # return ({"Prediction": list(prediction)});
     # return jsonify({"Prediction": list(prediction)});
     # return ("Response" + prediction)
     # return jsonify(features);
-
-
 
 
 
