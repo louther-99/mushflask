@@ -335,7 +335,7 @@ def getJsontoCsv(countShitYes = 0, countShitNo = 0):
 def getDes2():
 
     desss2Json = request.json
-    dfs = pd.read_csv(r"dataset.csv")
+    dfs = pd.read_csv(r"datasets.csv")
     print(f" Dataframe Head: \n {dfs.head()}\n")
     print(f" Dataframe Described: \n {dfs.describe()}\n")
     dess2 = dfs.describe()
@@ -361,7 +361,7 @@ def predict():
     # j = request.get_json()
     # print(j);
     des2jsn = request.json
-    df = pd.read_csv(r"dataset.csv")
+    df = pd.read_csv(r"datasets.csv")
     dess2 = df.describe()
     dess2Dict = dess2.to_dict()
     desss2Json = dess2.to_json()

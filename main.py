@@ -23,7 +23,7 @@ import tensorflow
 
 
 # df = pd.read_csv(r"/Users/loutherolayres/PycharmProjects/mush/MyDataSetCSV2.csv")
-df = pd.read_csv(r"dataset.csv")
+df = pd.read_csv(r"datasets.csv")
 
 rec = list()
 
