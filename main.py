@@ -10,7 +10,7 @@ from sklearn.metrics import classification_report
 from sklearn import metrics
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import accuracy_score, confusion_matrix
-from sklearn.metrics import plot_confusion_matrix
+# from sklearn.metrics import plot_confusion_matrix
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
