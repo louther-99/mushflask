@@ -4,22 +4,22 @@ from sklearn.naive_bayes import GaussianNB
 # from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
-from sklearn.model_selection import LeaveOneOut
-from sklearn.model_selection import cross_val_score
+# from sklearn.model_selection import LeaveOneOut
+# from sklearn.model_selection import cross_val_score
 from sklearn.metrics import classification_report
 from sklearn import metrics
-from sklearn.metrics import mean_absolute_error
+# from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import accuracy_score, confusion_matrix
 # from sklearn.metrics import plot_confusion_matrix
-from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import MinMaxScaler
-import numpy as np
-from plotnine import *
-from sklearn.pipeline import Pipeline
-# from tensorflow import keras
-from tensorflow.python import keras
-# import keras
-import tensorflow
+# from sklearn.preprocessing import StandardScaler
+# from sklearn.preprocessing import MinMaxScaler
+# import numpy as np
+# from plotnine import *
+# from sklearn.pipeline import Pipeline
+# # from tensorflow import keras
+# from tensorflow.python import keras
+# # import keras
+# import tensorflow
 
 
 # df = pd.read_csv(r"/Users/loutherolayres/PycharmProjects/mush/MyDataSetCSV2.csv")
