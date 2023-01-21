@@ -1,5 +1,5 @@
 import json
-import time
+# import time
 from main import y_test, y_pred, ac
 import joblib
 from sklearn.model_selection import KFold
