@@ -446,6 +446,8 @@ def maine():
     # print(f"CM: \n{cm}\n")
     #
 
+    return jsonify({"Accuracy" : acc });
+
 
 @app.route('/api', methods = ['GET'])
 def returnascii():
