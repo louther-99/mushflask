@@ -67,7 +67,7 @@ mushroom_classo = ['outcome']
 Xo = dfo[mushroom_featureso]
 yo = dfo[mushroom_classo]
 
-dfo['outcome'].hist()
+# dfo['outcome'].hist()
 
 kfo = KFold(n_splits=5)
 print(f"\nkf is: \n{kfo}\n")
@@ -150,7 +150,7 @@ def maine():
     X = df[mushroom_features]
     y = df[mushroom_class]
 
-    df['outcome'].hist()
+    # df['outcome'].hist()
 
     kf = KFold(n_splits=5)
     print(f"\nkf is: \n{kf}\n")
