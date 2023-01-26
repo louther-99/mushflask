@@ -735,6 +735,10 @@ def getJsontoCsv(countShitYes = 0, countShitNo = 0):
     acsjson = jsonify(acs)
     print(wut)
     print(now)
+    print("Shifties")
+    print(countShitYes);
+    print(countShitNo);
+
     # jsonify({"Description": jsonDes})
 
     # return (now, acsjson)
