@@ -740,7 +740,7 @@ def getJsontoCsv(countShitYes = 0, countShitNo = 0):
     # return (now, acsjson)
     # return (jsonDes + jsonify({"Prediction": newJsn, "Accuracy" : acs, "Outcome" : determiner }))
     # return  jsonify({"Description" : jsonDes})
-    return jsonify({"Prediction": newJsn, "Accuracy" : acs, "Outcome" : determiner });
+    return jsonify({"Prediction": newJsn, "Accuracy" : acs, "Outcome" : determiner, "Yes" : countShitYes, "No" :  countShitNo});
     #
     # value = {
     #     "Prediction": newJsn,
