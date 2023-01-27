@@ -725,6 +725,25 @@ def getJsontoCsv(countShitYes = 0, countShitNo = 0):
     cmm = confusion_matrix(yy_test, yy_preds)
     print(f"\nConfusion Matrix: \n{cmm}\n")
 
+    print(cmm[0][0]);
+    print(cmm[0][1]);
+    print(cmm[1][0]);
+    print(cmm[1][1]);
+    con = {}
+    TrueNegative = int(cmm[0][0]);
+    FalsePositive = int(cmm[0][1]);
+    FalseNegative = int(cmm[1][0]);
+    TruePositive = int(cmm[1][1]);
+    print(con)
+    mydict = {"first" : {TrueNegative}, "second" : FalsePositive, 'third' : FalseNegative, 'fourth' : TruePositive }
+    print(type(con))
+    # conn = str(con)
+    # conn = con.to_string()
+    conn = str(mydict)
+    # conn = json.dumps(con, default=str)
+    # conn = json.loads(json.dumps((con)))
+    print(mydict);
+
     print("Trying to save a new model")
     joblib.dump(clfss, "GaussianNbV2shitsss")
     print("Done creating a model");
@@ -738,13 +757,16 @@ def getJsontoCsv(countShitYes = 0, countShitNo = 0):
     print("Shifties")
     print(countShitYes);
     print(countShitNo);
+    # print(jsonify({"Prediction": newJsn, "Accuracy": acs, "Outcome": determiner, "Yes": countShitYes, "No": countShitNo,
+    #          "Confusion": conn}));
+
 
     # jsonify({"Description": jsonDes})
 
     # return (now, acsjson)
     # return (jsonDes + jsonify({"Prediction": newJsn, "Accuracy" : acs, "Outcome" : determiner }))
     # return  jsonify({"Description" : jsonDes})
-    return jsonify({"Prediction": newJsn, "Accuracy" : acs, "Outcome" : determiner, "Yes" : countShitYes, "No" :  countShitNo});
+    return jsonify({"Prediction": newJsn, "Accuracy" : acs, "Outcome" : determiner, "Yes" : countShitYes, "No" :  countShitNo, "Confusion" : conn, "TrueNegative" : TrueNegative, "FalsePositive" : FalsePositive, "FalseNegative" : TruePositive, "TruePositive" : TruePositive});
     #
     # value = {
     #     "Prediction": newJsn,
