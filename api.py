@@ -489,73 +489,23 @@ def getDes():
 @app.route('/convertByBatch', methods = ['POST'])
 def getJsontoCsv(countShitYes = 0, countShitNo = 0):
     jsn = request.json
-    # df2 = pd.read_json(jsn, orient='index')
-    # print("Printing df2")
-    # print(df2)
+
     print("Printing jsn")
     print(jsn)
     print("Done printing jsn")
     print(jsn[0]['outcome']); #no
-    # title = ('title' + {jsn['title']});
-    # data = ('data' + {jsn['data']});
-    #
-    # t = jsn['title']
-    # d = jsn['data']
-    # for data in d:
-    #     y = data
-    #
-    # print(t)
-    # print(d)
-    # print(y)
-    # datas = title + data
-    # print('Datas:')
-    # print(datas)
-
-    # s = jsonify(jsn)
-    # print(s)
-    # return jsonify({"response" : jsn})
-    # dat = json.loads()
-    # print("Printing dat")
-    # print(dat)
-    # jsonD = json.dumps(jsn)
-    # jsons = json.loads(jsn)
-    # print(jsonD);
-    # print("Done printing jsonD")
-    # print(jsonD[0])
-    # print(jsonD[1])
-    # sx = json.loads(jsn)
-    # print("\njsons: ");
-    # print(sx);
-    # new = pd.read_json(jsn)
-    # new.to_csv('wakaruu.csv');
-
-    # rf = joblib.load("GaussianNb")
-    # yPred = rf.predict(X_test)
-    # print(f"rf.predict(X_test) is: \n{rf.predict(X_test)}\n")
 
     dfItem = pd.DataFrame.from_records(jsn)
     dfItem.to_csv('my8.csv', index = False)
     print(dfItem);
     print(dfItem.head())
     des = dfItem.describe()
-    # sonify = jsonify(des)
-    # desDump = json.dumps(des)
+
     print(f"Des: {des}")
     jsonDes = des.to_json()
     print(f"Des to json {jsonDes}")
     print(dfItem.describe());
 
-    # l = dfItem['lightLevel'];
-    # r = dfItem['roomTemp'];
-    # h = dfItem['humidity'];
-    #
-    # print(l);
-    # print(h);
-    # print(r);
-
-
-    # df = pd.read_json(jsons)
-    # df.to_csv('my3.csv')
 
 
 
@@ -564,8 +514,7 @@ def getJsontoCsv(countShitYes = 0, countShitNo = 0):
     humidity = float(jsn[0]['humidity'])
 
     print("Printing length of json")
-    # json_string = json.dumps(jsn)
-    # byte_ = json_string.encode("utf-8")
+
     size_in_bytes = len(jsn)
     print(size_in_bytes)
     list = []
@@ -642,11 +591,7 @@ def getJsontoCsv(countShitYes = 0, countShitNo = 0):
 
     # writing into the file
     df.to_csv("AllD.csv", index=False)
-    # sh = str(listpred)
-    # ch =
-    # list_of_str = [elem.replace(ch, 'Yes') for elem in sh]
-    # # new = listpred.replace(['Yes'], 'Yes')
-    # print(list_of_str)
+
     print("listpred")
     print(listpred)
     print("listpred[0]")
@@ -660,29 +605,6 @@ def getJsontoCsv(countShitYes = 0, countShitNo = 0):
     print(roomTemp);
     print(humidity);
     print("Done printing another shits")
-
-
-
-    # print("Done printing df pd.read_json")
-    # df = pd.DataFrame(jsn)
-    # print(df)
-    # print(f" Dataframe Head: \n {df.head()}\n")
-    # print(f" Dataframe Described: \n {df.describe()}\n")
-    # mushroom_featuress = ['lightLevel', 'roomTemp', 'humidity']
-    # mushroom_classs = ['outcome']
-    # X = df[mushroom_featuress]
-    # y = df[mushroom_classs]
-    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.20, random_state=0)
-    #
-    # clfs = GaussianNB()
-    # clfs.fit(X_train, y_train)
-    #
-    # y_pred = clfs.predict(X_test)
-    # acR = accuracy_score(y_test, y_pred);
-    # print(f"Accuracy Score: \n {acR}\n")
-    # print(f"Accuracy Score: \n {accuracy_score(y_test, y_pred)}\n")
-    # print(f"Classification Report: \n {classification_report(y_test, y_pred)}\n")
-    # return jsonify(jsn)
 
 
     print("Starting to create a new model");
@@ -757,31 +679,14 @@ def getJsontoCsv(countShitYes = 0, countShitNo = 0):
     print("Shifties")
     print(countShitYes);
     print(countShitNo);
-    # print(jsonify({"Prediction": newJsn, "Accuracy": acs, "Outcome": determiner, "Yes": countShitYes, "No": countShitNo,
-    #          "Confusion": conn}));
 
+    return jsonify({"Prediction": newJsn, "Accuracy" : acs, "Outcome" : determiner, "Yes" : countShitYes, "No" :  countShitNo, "Confusion" : conn, "TrueNegative" : TrueNegative, "FalsePositive" : FalsePositive, "FalseNegative" : FalseNegative, "TruePositive" : TruePositive});
 
-    # jsonify({"Description": jsonDes})
-
-    # return (now, acsjson)
-    # return (jsonDes + jsonify({"Prediction": newJsn, "Accuracy" : acs, "Outcome" : determiner }))
-    # return  jsonify({"Description" : jsonDes})
-    return jsonify({"Prediction": newJsn, "Accuracy" : acs, "Outcome" : determiner, "Yes" : countShitYes, "No" :  countShitNo, "Confusion" : conn, "TrueNegative" : TrueNegative, "FalsePositive" : FalsePositive, "FalseNegative" : TruePositive, "TruePositive" : TruePositive});
-    #
-    # value = {
-    #     "Prediction": newJsn,
-    #     "Accuracy": acs,
-    #     "Outcome" : determiner,
-    #     # "Description" : jsonify(jsonDes)
-    # }
-    # val = json.dumps(value)
-    # # return (val,jsonDes)
-    # # return jsonDes
-    # return val
 
 
 @app.route('/description2ByIndiv', methods = ['GET', 'POST'])
 def getDes2():
+
 
     desss2Json = request.json
     dfs = pd.read_csv(r"datasets.csv")
@@ -797,12 +702,17 @@ def getDes2():
     # return desss
     #dess.to_json() then simply return
     # return jsonify({"Response" : des2jsns, "Responde" : dess2Dicts})
+
     return jsonify({"Responde" : dess2Dict, "Response" : desss2Json, })
+
+
+
 
 
 
 @app.route('/predictByIndiv', methods = ['POST', 'GET']) #POST To send data
 def predict():
+
     print("Start of predictByIndiv")
     # main.read()
     di = []
@@ -827,6 +737,20 @@ def predict():
     clf.fit(X_train, y_train)
 
 
+    y_pred = clf.predict(X_test)
+    ac = accuracy_score(y_test, y_pred);
+    print("Indiv ac");
+    print(ac);
+
+    cmm = confusion_matrix(y_test, y_pred);
+
+    TrueNegative = int(cmm[0][0]);
+    FalsePositive = int(cmm[0][1]);
+    FalseNegative = int(cmm[1][0]);
+    TruePositive = int(cmm[1][1]);
+
+
+
     json_ = request.json
     print(json_);
     print("Done printing json\n")
@@ -849,12 +773,22 @@ def predict():
     print("\nPrinting y_test")
     # print(y_test)
 
+
+
     # ac = accuracy_score(y_test, y_pred);
     # ac = accuracy_score(y_test, prediction);
     # print(f'\n{ac} is ac')
     print(jsonify({"Prediction": list(prediction)}))
     # return jsonify({"Prediction": list(prediction), "Accuracy" : ac, "Responde" : dess2Dict, "Response" : des2jsn});
-    return jsonify({"Prediction": list(prediction), "Accuracy" : ac, "Responde" : dess2Dict});
+
+    # return jsonify(
+    #     {"Prediction": newJsn, "Accuracy": acs, "Outcome": determiner, "Yes": countShitYes, "No": countShitNo,
+    #      "Confusion": conn, "TrueNegative": TrueNegative, "FalsePositive": FalsePositive,
+    #      "FalseNegative": FalseNegative, "TruePositive": TruePositive});
+
+
+    return jsonify({"Prediction": list(prediction), "Accuracy" : ac, "Responde" : dess2Dict, "TrueNegative" : TrueNegative, "FalsePositive" : FalsePositive, "FalseNegative" : FalseNegative, "TruePositive" : TruePositive});
+
     # return ({"Prediction": list(prediction)});
     # return jsonify({"Prediction": list(prediction)});
     # return ("Response" + prediction)
